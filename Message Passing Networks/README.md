@@ -22,6 +22,7 @@ The information is propagated (spread) across the nodes and edges in each iterat
 In message passing process, the graph denoted by $G = (V, E)$ is at first constructed, where $V = \\{1, 2, \cdots, i, j, \cdots, n\\}$ is the set of node indices and $E = \\{(1, 2), \cdots, (i, j), \cdots \\}$ is a collection of node pairs for edge representation. Graph neural network architectures aim to learn the representation of nodes and encode their possible edge connections. Hence, an embedding feature vector is defined for each node and each edge between mutually connected any two nodes.
 
 $h_{ij}^0 \rightarrow$ The embedding of edge $(i, j)$ in iteration $0$.
+
 $h_{i}^0 \rightarrow$ The embedding of node $i$ in iteration $0$. 
 
 Initial embedding vectors can be randomly or manually defined. It is also possible to use simple CNN or RNN to extract initial embedding features. In first iteration, the nodes do not know anything about the graph and even their neighbors. 
