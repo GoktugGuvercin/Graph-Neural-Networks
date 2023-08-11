@@ -25,4 +25,20 @@ $h_{ij}^0 \rightarrow$ The embedding of edge $(i, j)$ in iteration $0$.
 
 $h_{i}^0 \rightarrow$ The embedding of node $i$ in iteration $0$. 
 
-Initial embedding vectors can be randomly or manually defined. It is also possible to use simple CNN or RNN to extract initial embedding features. In first iteration, the nodes do not know anything about the graph and even their neighbors. 
+$h_{i}^n \rightarrow$ The embedding of node $i$ in iteration $n$. 
+
+Initial embedding vectors can be randomly or manually defined. It is also possible to use simple CNN or RNN to extract initial embedding features. In first iteration, the nodes do not know anything about the graph and even their neighbors. As message passing operations are performed, the nodes get more familiar with their neighbors, but also learn what their neighbors know and see about local neighborhood. In that way, each node starts to learn local topology on the graph. If N number of message passing iterations proceed, each node would access and meet all the nodes located N step further.
+
+Message passing operation is split into $2$ parts:
+1. Message creation per node
+2. Node update 
+
+In message creation, the embedding vectors of target node, its one neighbor and the connection between them are aggregated and passed to a learnable function such as an MLP to generate a message. At this point, one of the approaches to aggregate these embedding vectors is concatenation. The output of MLP would be a message of just one neighbor, so same operation is repeated for all neighbors and output message per neighbor is combined in a permutation invariant way, which can be summation, max or mean. The following formula is general denotion of message creation process:
+
+$m_v^{(k+1)} = \sum_{v \in N(u)} M(h_u^k, \\,\\, h_v^k, \\,\\, h_{u\\,v})$
+
+In node update, the created message is combined with current embedding vector of target node and passed to another learnable function like MLP to generate next embedding vector of the node $u$:
+
+$h_u^{k+1} = U(h_u^k, \\,\\, m_v^{(k+1)})$
+
+
